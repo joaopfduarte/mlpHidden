@@ -114,4 +114,57 @@ public class MlpImp {
 
         return output;
     }
+
+    public double[] test(double[] input, double[] target) {
+        int nIn = getWh().length - 1;
+        int nHidden = getWh()[0].length;
+        int nOut = getWtheta()[0].length;
+
+        double[] inBias = new double[nIn + 1];
+        for (int i = 0; i < nIn; i++) {
+            inBias[i] = input[i];
+        }
+        inBias[nIn] = 1.0;
+
+        double[] hidden = new double[nHidden];
+        for (int i = 0; i < nHidden; i++) {
+            double sum = 0.0;
+            for (int j = 0; j < nIn + 1; j++) {
+                sum += inBias[j] * getWh()[j][i];
+            }
+            hidden[i] = sigmoid(sum);
+        }
+
+        double[] hiddenBias = new double[nHidden + 1];
+        for (int i = 0; i < nHidden; i++) {
+            hiddenBias[i] = hidden[i];
+        }
+        hiddenBias[nHidden] = 1.0;
+
+        double[] output = new double[nOut];
+        for (int i = 0; i < nOut; i++) {
+            double sum = 0.0;
+            for (int j = 0; j < nHidden + 1; j++) {
+                sum += hiddenBias[j] * getWtheta()[j][i];
+            }
+            output[i] = sigmoid(sum);
+        }
+
+        double[] deltaOut = new double[nOut];
+        for (int i = 0; i < nOut; i++) {
+            double error = target[i] - output[i];
+            deltaOut[i] = error * sigmoidFromOutput(output[i]);
+        }
+
+        double[] deltaHidden = new double[nHidden];
+        for (int i = 0; i < nHidden; i++) {
+            double sum = 0.0;
+            for (int j = 0; j < nOut; j++) {
+                sum += deltaOut[j] * getWtheta()[i][j];
+            }
+            deltaHidden[i] = sum * sigmoidFromOutput(hidden[i]);
+        }
+
+        return output;
+    }
 }
