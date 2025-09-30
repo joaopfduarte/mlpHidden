@@ -4,18 +4,26 @@ public class MlpImp {
     /*
     Pesos
      */
-    private  double [][] Wh;
-    private double [][] Wtheta;
+    private double[][] Wh;
+    private double[][] Wtheta;
 
     private static final double learningRate = 0.3;
 
-    private double[][] getWtheta() {return Wtheta;}
+    private double[][] getWtheta() {
+        return Wtheta;
+    }
 
-    private void setWtheta(double[][] wtheta) {Wtheta = wtheta;}
+    private void setWtheta(double[][] wtheta) {
+        Wtheta = wtheta;
+    }
 
-    private double[][] getWh() {return Wh;}
+    private double[][] getWh() {
+        return Wh;
+    }
 
-    private void setWh(double[][] wh) {Wh = wh;}
+    private void setWh(double[][] wh) {
+        Wh = wh;
+    }
 
     public MlpImp(int qtdaIn, int qtdaOut, int qtdaHidden) {
         setWh(new double[qtdaIn + 1][qtdaHidden]);
